@@ -6,32 +6,32 @@ Useful for daily ops work, troubleshooting, and certification prep (RHCSA/LFCS).
 
 ## Table of Contents
 
-- [1. Quick System Overview](#1-quick-system-overview)
-- [2. Hardware & Devices](#2-hardware--devices)
-- [3. Users, Groups & Authentication](#3-users-groups--authentication)
-- [4. Files & Directories](#4-files--directories)
-- [5. Permissions, Ownership & ACLs](#5-permissions-ownership--acls)
-- [6. Text Processing & Editors](#6-text-processing--editors)
-- [7. Processes & Job Control](#7-processes--job-control)
-- [8. Performance & Troubleshooting](#8-performance--troubleshooting)
-- [9. Package Management](#9-package-management)
-- [10. systemd: Services, Timers & Logs](#10-systemd-services-timers--logs)
-- [11. Networking Basics](#11-networking-basics)
-- [12. Networking — Advanced & Firewalls](#12-networking--advanced--firewalls)
-- [13. Storage, Filesystems & LVM](#13-storage-filesystems--lvm)
-- [14. Archiving, Compression & Backup](#14-archiving-compression--backup)
-- [15. Security & SELinux](#15-security--selinux)
-- [16. SSH & Remote Access](#16-ssh--remote-access)
-- [17. Kernel & Boot Management](#17-kernel--boot-management)
-- [18. Scheduling Tasks](#18-scheduling-tasks)
-- [19. Containers & Virtualization](#19-containers--virtualization)
-- [20. Modern CLI Alternatives](#20-modern-cli-alternatives)
-- [21. Cloud & Automation Tooling](#21-cloud--automation-tooling)
-- [22. Quick One-Liner Recipes](#22-quick-one-liner-recipes)
+- [Quick System Overview](#1-quick-system-overview)
+- [Hardware & Devices](#2-hardware--devices)
+- [Users, Groups & Authentication](#3-users-groups--authentication)
+- [Files & Directories](#4-files--directories)
+- [Permissions, Ownership & ACLs](#5-permissions-ownership--acls)
+- [Text Processing & Editors](#6-text-processing--editors)
+- [Processes & Job Control](#7-processes--job-control)
+- [Performance & Troubleshooting](#8-performance--troubleshooting)
+- [Package Management](#9-package-management)
+- [systemd: Services, Timers & Logs](#10-systemd-services-timers--logs)
+- [Networking Basics](#11-networking-basics)
+- [Networking — Advanced & Firewalls](#12-networking--advanced--firewalls)
+- [Storage, Filesystems & LVM](#13-storage-filesystems--lvm)
+- [Archiving, Compression & Backup](#14-archiving-compression--backup)
+- [Security & SELinux](#15-security--selinux)
+- [SSH & Remote Access](#16-ssh--remote-access)
+- [Kernel & Boot Management](#17-kernel--boot-management)
+- [Scheduling Tasks](#18-scheduling-tasks)
+- [Containers & Virtualization](#19-containers--virtualization)
+- [Modern CLI Alternatives](#20-modern-cli-alternatives)
+- [Cloud & Automation Tooling](#21-cloud--automation-tooling)
+- [Quick One-Liner Recipes](#22-quick-one-liner-recipes)
 
 ---
 
-## 1. Quick System Overview
+## Quick System Overview
 
 The first commands to run on any unfamiliar box.
 
@@ -50,7 +50,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 2. Hardware & Devices
+## Hardware & Devices
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -68,7 +68,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 3. Users, Groups & Authentication
+## Users, Groups & Authentication
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -97,7 +97,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 4. Files & Directories
+## Files & Directories
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -124,7 +124,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 5. Permissions, Ownership & ACLs
+## Permissions, Ownership & ACLs
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -140,7 +140,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 6. Text Processing & Editors
+## Text Processing & Editors
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -163,7 +163,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 7. Processes & Job Control
+## Processes & Job Control
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -183,7 +183,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 8. Performance & Troubleshooting
+## Performance & Troubleshooting
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -207,7 +207,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 9. Package Management
+## Package Management
 
 ### RPM-based (RHEL, CentOS, Rocky, Fedora)
 
@@ -243,7 +243,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 10. systemd: Services, Timers & Logs
+## systemd: Services, Timers & Logs
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -265,7 +265,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 11. Networking Basics
+## Networking Basics
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -287,7 +287,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 12. Networking — Advanced & Firewalls
+## Networking — Advanced & Firewalls
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -307,7 +307,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 13. Storage, Filesystems & LVM
+## Storage, Filesystems & LVM
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -335,7 +335,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 14. Archiving, Compression & Backup
+## Archiving, Compression & Backup
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -355,7 +355,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 15. Security & SELinux
+## Security & SELinux
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -375,7 +375,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 16. SSH & Remote Access
+## SSH & Remote Access
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -393,7 +393,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 17. Kernel & Boot Management
+## Kernel & Boot Management
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -414,7 +414,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 18. Scheduling Tasks
+## Scheduling Tasks
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -430,7 +430,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 19. Containers & Virtualization
+## Containers & Virtualization
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -448,7 +448,7 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## 20. Modern CLI Alternatives
+## Modern CLI Alternatives
 
 Newer tools that have become common on modern servers and dev workstations — useful to know even if the classics remain the lowest-common-denominator default.
 
@@ -469,7 +469,7 @@ Newer tools that have become common on modern servers and dev workstations — u
 
 ---
 
-## 21. Cloud & Automation Tooling
+## Cloud & Automation Tooling
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -487,7 +487,7 @@ Newer tools that have become common on modern servers and dev workstations — u
 
 ---
 
-## 22. Quick One-Liner Recipes
+## Quick One-Liner Recipes
 
 Practical combinations for everyday troubleshooting.
 
