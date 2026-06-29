@@ -6,7 +6,7 @@
 # Example: ./tar-backup.sh ~/documents ~/backups 5
 #
 # Requires: ~/.curlEmail containing:
-#   ADMIN_EMAIL="admin@company.com"
+#   ADMIN_EMAIL="you@company.com"
 #   SMTP_USER="you@company.com"
 #   SMTP_PASS="your-app-specific-password"
 #   SMTP_SERVER="smtps://smtp.mail.me.com:465"
