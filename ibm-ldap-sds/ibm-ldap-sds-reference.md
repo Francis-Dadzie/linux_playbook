@@ -1,35 +1,35 @@
 # IBM Security Directory Server (SDS) — LDAP Administrator Reference
 
-A practical reference for administering IBM Security Directory Server (SDS), also known as IBM Tivoli Directory Server (TDS) in older versions. Covers architecture, core concepts, day-to-day commands, replication, certificates, performance tuning, and health monitoring.
+A reference for administering IBM SDS. Covers architecture, core concepts, day-to-day commands, replication, certificates, performance tuning, and health monitoring.
 
 ---
 
 ## Table of Contents
 
-- [1. LDAP Fundamentals](#1-ldap-fundamentals)
-- [2. IBM SDS Architecture](#2-ibm-sds-architecture)
-- [3. Installation Layout on AIX](#3-installation-layout-on-aix)
-- [4. ibmslapd.conf — Key Directives](#4-ibmslapdconf--key-directives)
-- [5. Core Admin Commands](#5-core-admin-commands)
-- [6. LDIF — The LDAP Data Format](#6-ldif--the-ldap-data-format)
-- [7. Schema Management](#7-schema-management)
-- [8. Replication Management](#8-replication-management)
-- [9. User & Group Management via LDAP](#9-user--group-management-via-ldap)
-- [10. Access Control Lists (ACLs)](#10-access-control-lists-acls)
-- [11. Password Policy](#11-password-policy)
-- [12. Certificate Management (TLS/SSL)](#12-certificate-management-tlsssl)
-- [13. Performance Tuning & Indexing](#13-performance-tuning--indexing)
-- [14. Scalability — Growing the Directory](#14-scalability--growing-the-directory)
-- [15. Audit Logging](#15-audit-logging)
-- [16. Backup & Recovery](#16-backup--recovery)
-- [17. Health Monitoring](#17-health-monitoring)
-- [18. Logging & Troubleshooting](#18-logging--troubleshooting)
-- [19. IBM SDS Web Admin Console](#19-ibm-sds-web-admin-console)
-- [20. Useful LDAP Search Filters Reference](#20-useful-ldap-search-filters-reference)
+- [LDAP Fundamentals](#ldap-fundamentals)
+- [IBM SDS Architecture](#ibm-sds-architecture)
+- [Installation Layout on AIX](#installation-layout-on-aix)
+- [ibmslapd.conf — Key Directives](#ibmslapdconf--key-directives)
+- [Core Admin Commands](#core-admin-commands)
+- [LDIF — The LDAP Data Format](#ldif--the-ldap-data-format)
+- [Schema Management](#schema-management)
+- [Replication Management](#replication-management)
+- [User & Group Management via LDAP](#user--group-management-via-ldap)
+- [Access Control Lists (ACLs)](#access-control-lists-acls)
+- [Password Policy](#password-policy)
+- [Certificate Management (TLS/SSL)](#certificate-management-tlsssl)
+- [Performance Tuning & Indexing](#performance-tuning--indexing)
+- [Scalability — Growing the Directory](#scalability--growing-the-directory)
+- [Audit Logging](#audit-logging)
+- [Backup & Recovery](#backup--recovery)
+- [Health Monitoring](#health-monitoring)
+- [Logging & Troubleshooting](#logging--troubleshooting)
+- [IBM SDS Web Admin Console](#ibm-sds-web-admin-console)
+- [Useful LDAP Search Filters Reference](#useful-ldap-search-filters-reference)
 
 ---
 
-## 1. LDAP Fundamentals
+## LDAP Fundamentals
 
 ### What is LDAP?
 **Lightweight Directory Access Protocol** — a standard protocol for reading and writing hierarchical directory data over TCP/IP. Used primarily for:
@@ -96,7 +96,7 @@ dc=example,dc=com                   ← Root (Base DN / Suffix)
 
 ---
 
-## 2. IBM SDS Architecture
+## IBM SDS Architecture
 
 ### Components
 
@@ -131,7 +131,7 @@ dc=example,dc=com                   ← Root (Base DN / Suffix)
 
 ---
 
-## 3. Installation Layout on AIX
+## Installation Layout on AIX
 
 ```
 /opt/IBM/ldap/V6.4/              ← SDS binaries and libraries
@@ -160,7 +160,7 @@ dc=example,dc=com                   ← Root (Base DN / Suffix)
 
 ---
 
-## 4. ibmslapd.conf — Key Directives
+## ibmslapd.conf — Key Directives
 
 The main SDS configuration file. Location: `/etc/opt/IBM/ldap/V6.4/etc/ibmslapd.conf`
 Validate syntax before restarting: `ibmslapd -t -f /etc/opt/IBM/ldap/V6.4/etc/ibmslapd.conf`
@@ -214,7 +214,7 @@ include /etc/opt/IBM/ldap/V6.4/etc/schema/custom.schema
 
 ---
 
-## 5. Core Admin Commands
+## Core Admin Commands
 
 ### Starting / Stopping SDS
 
@@ -340,7 +340,7 @@ ldapsearch -h localhost -p 3389 -D "cn=root" -w pass \
 
 ---
 
-## 6. LDIF — The LDAP Data Format
+## LDIF — The LDAP Data Format
 
 LDIF (LDAP Data Interchange Format) is the standard text format for representing LDAP entries and change operations.
 
@@ -411,7 +411,7 @@ newsuperior: ou=Alumni,dc=example,dc=com
 
 ---
 
-## 7. Schema Management
+## Schema Management
 
 Schema defines the rules of the directory — what attributes and object classes exist.
 
@@ -434,7 +434,7 @@ ls /etc/opt/IBM/ldap/V6.4/etc/schema/
 
 ---
 
-## 8. Replication Management
+## Replication Management
 
 ### Check Replication Status
 
@@ -493,7 +493,7 @@ date
 
 ---
 
-## 9. User & Group Management via LDAP
+## User & Group Management via LDAP
 
 ### Add a User
 
@@ -576,7 +576,7 @@ ldapsearch -h localhost -p 389 -D "cn=root" -w adminpass \
 
 ---
 
-## 10. Access Control Lists (ACLs)
+## Access Control Lists (ACLs)
 
 IBM SDS uses ACIs (Access Control Items) to define who can read/write what in the directory.
 
@@ -607,7 +607,7 @@ aclentry: access-id:cn=appbind,ou=ServiceAccounts,dc=example,dc=com:objectclass=
 
 ---
 
-## 11. Password Policy
+## Password Policy
 
 ### View Current Password Policy
 
@@ -638,7 +638,7 @@ ldapsearch -h localhost -p 389 -D "cn=root" -w adminpass \
 
 ---
 
-## 12. Certificate Management (TLS/SSL)
+## Certificate Management (TLS/SSL)
 
 IBM SDS uses **IBM GSKit** (Global Security Kit) for certificate management, not the OpenSSL keystore format directly. The tool is `gsk8capicmd_64`.
 
@@ -712,7 +712,7 @@ gsk8capicmd_64 -cert -setdefault \
 
 ---
 
-## 13. Performance Tuning & Indexing
+## Performance Tuning & Indexing
 
 ### Why Performance Degrades
 
@@ -782,7 +782,7 @@ EOF
 
 ---
 
-## 14. Scalability — Growing the Directory
+## Scalability — Growing the Directory
 
 When user counts grow or read load increases, the typical progression is:
 
@@ -829,7 +829,7 @@ grep "etime=" /var/ldap/ibmslapd.log | awk -F'etime=' '{print $2}' \
 
 ---
 
-## 15. Audit Logging
+## Audit Logging
 
 Audit logging in IBM SDS records **who did what** to the directory — which bind DN performed which operation (add, modify, delete, bind, search) and when. This is distinct from the error/operations log and is required for compliance in most enterprise environments (SOX, PCI-DSS, HIPAA).
 
@@ -924,7 +924,7 @@ The audit log can grow very large in active directories. Configure rotation in `
 
 ---
 
-## 16. Backup & Recovery
+## Backup & Recovery
 
 ### Export (Backup) the Directory
 
@@ -968,7 +968,7 @@ startsrc -s ibmslapd
 
 ---
 
-## 17. Health Monitoring
+## Health Monitoring
 
 ### Monitor Key Metrics via cn=Monitor
 
@@ -1010,7 +1010,7 @@ ldapsearch -h localhost -p 389 -D "cn=root" -w adminpass \
 
 ---
 
-## 18. Logging & Troubleshooting
+## Logging & Troubleshooting
 
 ### Log Locations
 
@@ -1053,7 +1053,7 @@ EOF
 
 ---
 
-## 19. IBM SDS Web Admin Console
+## IBM SDS Web Admin Console
 
 The IBM SDS Web Administration Tool runs on the admin server (port 3389) and provides a GUI for most admin tasks.
 
@@ -1074,7 +1074,7 @@ or: https://<server>:3636/IDSWebApp/
 
 ---
 
-## 20. Useful LDAP Search Filters Reference
+## Useful LDAP Search Filters Reference
 
 | Goal | Filter |
 |------|--------|
@@ -1094,4 +1094,4 @@ or: https://<server>:3636/IDSWebApp/
 
 ---
 
-*Cross-reference: [aix-commands.md](./aix-commands.md) | [ldap-checklists.md](./ldap-checklists.md) | [decision-guide.md](./decision-guide.md)*
+*Cross-reference: [aix-commands.md](./aix-commands.md) | [ldap-checklists.md](./ldap-checklists.md) | [decision-guide.md](../decision-guide.md)*
