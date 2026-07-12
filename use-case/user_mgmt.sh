@@ -14,11 +14,11 @@
 #
 # Examples:
 #   sudo ./user_mgmt.sh list
-#   sudo ./user_mgmt.sh add alice developers
-#   sudo ./user_mgmt.sh add bob contractors 2025-12-31
-#   sudo ./user_mgmt.sh status alice
-#   sudo ./user_mgmt.sh lock bob
-#   sudo ./user_mgmt.sh remove charlie
+#   sudo ./user_mgmt.sh add finn developers
+#   sudo ./user_mgmt.sh add dadzie contractors 2025-12-31
+#   sudo ./user_mgmt.sh status thabo
+#   sudo ./user_mgmt.sh lock chane
+#   sudo ./user_mgmt.sh remove Aliecia
 
 set -euo pipefail
 
