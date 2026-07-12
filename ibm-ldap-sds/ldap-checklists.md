@@ -1,15 +1,10 @@
 # IBM LDAP Administrator — Checklists
 
-Two checklists for IBM Security Directory Server (SDS/LDAP) administrators on AIX:
+SDS/LDAP on AIX:
 
-1. **Onboarding Checklist** — what to learn, set up, and document when you first join
-2. **Daily Ops Checklist** — what to check, verify, and action every day
+# Onboarding
 
----
-
-# Part 1: Onboarding Checklist
-
-Use this during your first 30–90 days. The goal is to build a complete picture of the environment before you touch anything.
+Goal is to build a picture of the environment before touching anything.
 
 ---
 
@@ -127,13 +122,13 @@ Use this during your first 30–90 days. The goal is to build a complete picture
 
 ---
 
-# Part 2: Daily Ops Checklist
+# Daily Ops
 
-Run through this every working day. Most items take seconds once you know the commands.
+Most items take seconds once you know the commands. Run through every working day. 
 
 ---
 
-## 🟢 Morning Checks (First 30 Minutes)
+## 🟢 Morning Checks (30mins)
 
 ### 1. Service Health
 - [ ] Confirm LDAP service is running on all servers
