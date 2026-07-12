@@ -420,5 +420,5 @@ db2 get snapshot for database on LDAPDB | grep -i "buffer pool"
 
 ## See Also
 
-- [commands.md](./commands.md)
-- [decision-guide.md](./decision-guide.md)
+- [commands.md](../commands.md)
+- [decision-guide.md](../decision-guide.md)
