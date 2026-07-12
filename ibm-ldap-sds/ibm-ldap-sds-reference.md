@@ -6,7 +6,7 @@ A reference for administering IBM SDS. Covers architecture, core concepts, day-t
 
 ## Table of Contents
 
-- [LDAP Fundamentals](#ldap-fundamentals)
+- [Intro](#intro)
 - [IBM SDS Architecture](#ibm-sds-architecture)
 - [Installation Layout on AIX](#installation-layout-on-aix)
 - [ibmslapd.conf — Key Directives](#ibmslapdconf--key-directives)
@@ -29,10 +29,8 @@ A reference for administering IBM SDS. Covers architecture, core concepts, day-t
 
 ---
 
-## LDAP Fundamentals
-
-### What is LDAP?
-**Lightweight Directory Access Protocol** — a standard protocol for reading and writing hierarchical directory data over TCP/IP. Used primarily for:
+### Intro
+LDAP is a standard protocol for reading and writing hierarchical directory data over TCP/IP. Used primarily for:
 - Authentication (verifying identity)
 - Authorization (checking group membership)
 - Address books / user stores (HR systems, email clients)
