@@ -86,7 +86,7 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 | `sudo` | Run as another user (if configured) | `sudo command` | Same |
 | `lsuser -f ALL` | List all users with all attributes | `lsuser -f ALL` | `cat /etc/passwd` |
 
-> **AIX stores user attributes in `/etc/security/user`, `/etc/security/passwd`, and `/etc/security/limits` — not just `/etc/passwd` and `/etc/shadow` like Linux.
+> AIX stores user attributes in `/etc/security/user`, `/etc/security/passwd`, and `/etc/security/limits` — not just `/etc/passwd` and `/etc/shadow` like Linux.
 
 ---
 
