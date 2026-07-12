@@ -146,7 +146,7 @@ Matching log entries:
 $matches
 
 --
-This is an automated alert from log_monitor.sh"
+This is an automated script alert from log_monitor.sh"
     fi
 }
 
