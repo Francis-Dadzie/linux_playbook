@@ -3,7 +3,7 @@
 # Prints a warning if any metric is above its threshold.
 #
 # Usage: ./health_monitor.sh [cpu_threshold] [mem_threshold] [disk_threshold]
-# Example: ./health_monitor.sh 80 85 90
+# Example: ./health_monitor.sh 70 80 90
 
 set -euo pipefail
 
