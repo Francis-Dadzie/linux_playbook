@@ -1,35 +1,35 @@
 # AIX Sysadmin Command Reference
 
-A practical, workflow-ordered command reference for IBM AIX administrators. AIX is IBM's enterprise Unix operating system — POSIX-compliant and conceptually similar to Linux, but with its own tooling, filesystem layout, package manager, and conventions. Where a Linux equivalent exists, it is noted.
+AIX is IBM's enterprise Unix operating system — POSIX-compliant and conceptually similar to Linux, but with its own tooling, filesystem layout, package manager, and conventions.
 
-> **Linux admin tip:** If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` instead of editing config files directly, `ODM` (Object Data Manager) as the system config database, `LVM` works differently (AIX invented it), and `installp`/`nim` instead of `apt`/`dnf`.
+If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` instead of editing config files directly, `ODM` (Object Data Manager) as the system config database, `LVM` works differently (AIX invented it), and `installp`/`nim` instead of `apt`/`dnf`.
 
 ## Table of Contents
 
-- [1. System Identity & Overview](#1-system-identity--overview)
-- [2. Hardware & Devices](#2-hardware--devices)
-- [3. Users, Groups & Authentication](#3-users-groups--authentication)
-- [4. Files & Directories](#4-files--directories)
-- [5. Permissions & Ownership](#5-permissions--ownership)
-- [6. Text Processing](#6-text-processing)
-- [7. Processes & Job Control](#7-processes--job-control)
-- [8. Performance & Diagnostics](#8-performance--diagnostics)
-- [9. Storage, LVM & Filesystems](#9-storage-lvm--filesystems)
-- [10. Networking](#10-networking)
-- [11. Package Management (installp, nim, rpm)](#11-package-management-installp-nim-rpm)
-- [12. Services & System Control](#12-services--system-control)
-- [13. Scheduling & Automation](#13-scheduling--automation)
-- [14. Logging & Auditing](#14-logging--auditing)
-- [15. Security & Certificates](#15-security--certificates)
-- [16. Backup & Recovery](#16-backup--recovery)
-- [17. SMIT — AIX's Admin Interface](#17-smit--aixs-admin-interface)
-- [18. AIX-Specific Utilities](#18-aix-specific-utilities)
-- [19. DB2 — IBM SDS Backend](#19-db2--ibm-sds-backend)
-- [20. Quick One-Liners for AIX](#20-quick-one-liners-for-aix)
+[System Identity & Overview](system-identity--overview)  
+[Hardware & Devices](hardware--devices)  
+[Users, Groups & Authentication](users-groups--authentication)  
+[Files & Directories](files--directories)  
+[Permissions & Ownership](permissions--ownership)  
+[Text Processing](text-processing)  
+[Processes & Job Control](processes--job-control)  
+[Performance & Diagnostics](performance--diagnostics)  
+[Storage, LVM & Filesystems](storage-lvm--filesystems)  
+[Networking](networking)  
+[Package Management (installp, nim, rpm)](package-management-installp-nim-rpm)  
+[Services & System Control](services--system-control)  
+[Scheduling & Automation](scheduling--automation)  
+[Logging & Auditing](logging--auditing)  
+[Security & Certificates](security--certificates)  
+[Backup & Recovery](backup--recovery)  
+[SMIT — AIX's Admin Interface](smit--aixs-admin-interface)  
+[AIX-Specific Utilities](aix-specific-utilities)  
+[DB2 — IBM SDS Backend](db2--ibm-sds-backend)  
+[Quick One-Liners for AIX](quick-one-liners-for-aix)  
 
 ---
 
-## 1. System Identity & Overview
+## System Identity & Overview
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -46,9 +46,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `lparstat` | Show LPAR (partition) CPU/memory stats | `lparstat -i` | `lscpu` |
 | `smtctl` | Simultaneous multi-threading info | `smtctl` | `lscpu \| grep Thread` |
 
----
-
-## 2. Hardware & Devices
+## Hardware & Devices
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -65,9 +63,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `cfgmgr` | Detect and configure new hardware | `cfgmgr` | `udevadm trigger` |
 | `lscfg -v` | List all configured hardware verbosely | `lscfg -v` | `lshw` |
 
----
-
-## 3. Users, Groups & Authentication
+## Users, Groups & Authentication
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -90,11 +86,11 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `sudo` | Run as another user (if configured) | `sudo command` | Same |
 | `lsuser -f ALL` | List all users with all attributes | `lsuser -f ALL` | `cat /etc/passwd` |
 
-> **AIX auth note:** AIX stores user attributes in `/etc/security/user`, `/etc/security/passwd`, and `/etc/security/limits` — not just `/etc/passwd` and `/etc/shadow` like Linux.
+> **AIX stores user attributes in `/etc/security/user`, `/etc/security/passwd`, and `/etc/security/limits` — not just `/etc/passwd` and `/etc/shadow` like Linux.
 
 ---
 
-## 4. Files & Directories
+## Files & Directories
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -112,11 +108,11 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `file` | Determine file type | `file binary` | Same |
 | `which` / `whence` | Find a command's location | `whence lsuser` | `which` / `type` |
 
-> **AIX filesystem note:** AIX uses JFS2 (Journaled File System 2) by default, not ext4/XFS. Key paths differ slightly — e.g., `/usr/bin` for most commands, `/usr/sbin` for admin tools.
+> AIX uses JFS2 (Journaled File System 2) by default, not ext4/XFS. Key paths differ slightly — e.g., `/usr/bin` for most commands, `/usr/sbin` for admin tools.
 
 ---
 
-## 5. Permissions & Ownership
+## Permissions & Ownership
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -128,9 +124,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `aclget` | Display ACL on a file | `aclget file` | `getfacl` |
 | `aclput` | Apply ACL from a file | `aclput file < acl.txt` | `setfacl --restore` |
 
----
-
-## 6. Text Processing
+## Text Processing
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -148,9 +142,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `xargs` | Build commands from stdin | `find . -name "*.log" \| xargs rm` | Same |
 | `vi` / `vim` | Text editor | `vi /etc/hosts` | Same |
 
----
-
-## 7. Processes & Job Control
+## Processes & Job Control
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -166,9 +158,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `procinfo` | Show process resource usage | `procinfo PID` | `/proc/PID/status` |
 | `svmon` | AIX virtual memory monitor per process | `svmon -P PID` | `pmap` |
 
----
-
-## 8. Performance & Diagnostics
+## Performance & Diagnostics
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -186,9 +176,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `errpt` | Error report — hardware/software faults | `errpt -a \| head -50` | `dmesg` |
 | `bindprocessor` | Bind processes to specific CPUs | `bindprocessor -q` | `taskset` |
 
----
-
-## 9. Storage, LVM & Filesystems
+## Storage, LVM & Filesystems
 
 > AIX invented LVM (Logical Volume Manager). Its terminology differs from Linux LVM — **Volume Groups**, **Logical Volumes**, and **Physical Volumes** exist in AIX too, but the commands are different.
 
@@ -214,9 +202,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `fsck` | Filesystem check | `fsck /dev/ldaplv` | Same |
 | `/etc/filesystems` | Persistent mount config (like `/etc/fstab`) | `cat /etc/filesystems` | `/etc/fstab` |
 
----
-
-## 10. Networking
+## Networking
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -236,9 +222,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `iptrace` | Packet tracing (AIX) | `iptrace -i en0 /tmp/trace.out` | `tcpdump` |
 | `ipreport` | Analyze `iptrace` output | `ipreport /tmp/trace.out` | `tcpdump -r` |
 
----
-
-## 11. Package Management (installp, nim, rpm)
+## Package Management (installp, nim, rpm)
 
 > AIX uses `installp` for native packages (`.bff` format) and `nim` for network installs. RPM is also supported for open-source software via the AIX Toolbox.
 
@@ -257,9 +241,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `rpm -ivh` | Install an RPM | `rpm -ivh package.rpm` | Same |
 | `nim -o install` | NIM network install | `nim -o cust -a lpp_source=lpp_res -a filesets=bos.net target` | `dnf install` (remote) |
 
----
-
-## 12. Services & System Control
+## Services & System Control
 
 > AIX uses **SRC (System Resource Controller)** to manage services — not systemd. Think of `startsrc`/`stopsrc`/`lssrc` as the AIX equivalents of `systemctl start/stop/status`.
 
@@ -281,9 +263,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `mkitab` | Add entry to `/etc/inittab` | `mkitab "myapp:2:respawn:/opt/myapp/start"` | `systemctl enable` |
 | `chitab` | Modify an `/etc/inittab` entry | `chitab "myapp:2:off:/opt/myapp/start"` | `systemctl disable` |
 
----
-
-## 13. Scheduling & Automation
+## Scheduling & Automation
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -294,9 +274,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `atq` / `atrm` | List/remove `at` jobs | `atq` | Same |
 | `batch` | Run when system load allows | `batch` | Same |
 
----
-
-## 14. Logging & Auditing
+## Logging & Auditing
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -313,9 +291,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `auditselect` | Filter audit trail | `auditselect -e "event==USER_Login" /audit/trail` | `ausearch` |
 | `auditpr` | Format audit records | `auditpr -t /audit/trail` | `aureport` |
 
----
-
-## 15. Security & Certificates
+## Security & Certificates
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -329,9 +305,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `lsfilt` | List IP filter rules | `lsfilt` | `iptables -L` |
 | `genfilt` | Generate IP filter rules | `genfilt -v 4 -a D -s 0.0.0.0 -d 0.0.0.0` | `iptables -A` |
 
----
-
-## 16. Backup & Recovery
+## Backup & Recovery
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -345,9 +319,7 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `nim -o mksysb` | NIM-based system backup | `nim -o mksysb -a mksysb_flags="-e" target` | N/A |
 | `mkcd` | Create bootable CD/ISO | `mkcd -r -d /dev/cd0 -m /tmp/cd` | `genisoimage` |
 
----
-
-## 17. SMIT — AIX's Admin Interface
+## SMIT — AIX's Admin Interface
 
 **SMIT** (System Management Interface Tool) is AIX's menu-driven admin UI. Most things you'd do on Linux by editing config files directly are done in AIX through SMIT. It also generates the underlying command, which you can view or save for scripting.
 
@@ -363,11 +335,11 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `smit errlog` | Jump to error log management |
 | `smit cron` | Jump to cron management |
 
-> **Pro tip:** Every action you take in SMIT generates a command that gets saved to `/var/adm/smit.log` and `/var/adm/smit.script`. Mining `smit.script` is one of the best ways to learn the underlying AIX commands when you're new.
+> **Pro tip:** Every action you take in SMIT generates a command that gets saved to `/var/adm/smit.log` and `/var/adm/smit.script`. Mining `smit.script` is one of the best ways to learn the underlying AIX commands.
 
 ---
 
-## 18. AIX-Specific Utilities
+## AIX-Specific Utilities
 
 | Command | Description | Notes |
 |---------|-------------|-------|
@@ -384,11 +356,9 @@ A practical, workflow-ordered command reference for IBM AIX administrators. AIX 
 | `lquerylv` | Query logical volume info (low-level) | `lquerylv -L /dev/ldaplv` |
 | `getconf` | Query system configuration variables | `getconf NPROCESSORS_ONLN` |
 
----
+## DB2 — IBM SDS Backend
 
-## 19. DB2 — IBM SDS Backend
-
-> IBM Security Directory Server stores all directory data in a DB2 database. Basic DB2 administration knowledge is essential for an LDAP admin on AIX. DB2 commands are run as the DB2 instance owner (typically `ldapdb2`) — switch with `su - ldapdb2` before running them.
+> IBM Security Directory Server stores all directory data in a DB2 database. DB2 commands are run as the DB2 instance owner (`ldapdb2`)
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -422,7 +392,7 @@ db2 get snapshot for database on LDAPDB | grep -i "buffer pool"
 
 ---
 
-## 20. Quick One-Liners for AIX
+## Quick One-Liners for AIX
 
 | Goal | Command |
 |------|---------|
@@ -450,6 +420,5 @@ db2 get snapshot for database on LDAPDB | grep -i "buffer pool"
 
 ## See Also
 
-- [commands.md](./commands.md) — Linux command reference
-- [decision-guide.md](./decision-guide.md) — scenario-to-tool mapping
-- [LICENSE](./LICENSE) — MIT
+- [commands.md](./commands.md)
+- [decision-guide.md](./decision-guide.md)
