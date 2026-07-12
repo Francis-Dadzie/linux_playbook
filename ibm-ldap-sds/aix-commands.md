@@ -1,4 +1,4 @@
-# AIX Sysadmin Command Reference
+# AIX Command Reference
 
 AIX is IBM's enterprise Unix operating system — POSIX-compliant and conceptually similar to Linux, but with its own tooling, filesystem layout, package manager, and conventions.
 
