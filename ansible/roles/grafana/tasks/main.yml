@@ -1,0 +1,59 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/grafana
+- name: Install grafana
+  ansible.builtin.package:
+    name: "{{ grafana_package }}"
+    state: present
+
+- name: Configure grafana admin credentials
+  ansible.builtin.lineinfile:
+    path: "{{ grafana_config }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    backup: true
+  loop:
+    - { regexp: '^;?admin_user\s*=.*', line: "admin_user = {{ grafana_admin_user }}" }
+    - { regexp: '^;?admin_password\s*=.*', line: "admin_password = {{ grafana_admin_password }}" }
+    - { regexp: '^;?http_port\s*=.*', line: "http_port = {{ grafana_port }}" }
+  notify: Restart grafana
+
+- name: Create provisioning directories
+  ansible.builtin.file:
+    path: "{{ grafana_provisioning_dir }}/{{ item }}"
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: "0755"
+  loop:
+    - datasources
+    - dashboards
+
+- name: Provision Prometheus datasource
+  ansible.builtin.template:
+    src: datasource.yml.j2
+    dest: "{{ grafana_provisioning_dir }}/datasources/prometheus.yml"
+    owner: grafana
+    group: grafana
+    mode: "0644"
+  notify: Restart grafana
+
+- name: Enable and start grafana
+  ansible.builtin.service:
+    name: "{{ grafana_service }}"
+    state: started
+    enabled: true
+
+- name: Allow grafana port through firewalld
+  ansible.posix.firewalld:
+    port: "{{ grafana_port }}/tcp"
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: Allow Grafana network connections (SELinux)
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: true
+    persistent: true
+  when: ansible_selinux.status == "enabled"

@@ -1,0 +1,10 @@
+# Managed by Ansible
+max_log_file          = {{ auditd_max_log_file }}
+num_logs              = {{ auditd_num_logs }}
+max_log_file_action   = {{ auditd_max_log_file_action }}
+space_left_action     = {{ auditd_space_left_action }}
+admin_space_left_action = {{ auditd_admin_space_left_action }}
+log_file              = /var/log/audit/audit.log
+log_format            = RAW
+flush                 = INCREMENTAL_ASYNC
+freq                  = 50

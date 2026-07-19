@@ -1,0 +1,15 @@
+---
+- name: Deploy node_exporter on managed nodes
+  hosts: linux
+  become: true
+
+  roles:
+    - node_exporter
+
+- name: Deploy Prometheus and Grafana on control node
+  hosts: control
+  become: true
+
+  roles:
+    - prometheus
+    - grafana

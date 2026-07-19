@@ -1,0 +1,9 @@
+---
+- name: Configure chrony
+  ansible.builtin.template:
+    src: chrony.conf.j2
+    dest: "{{ chrony_config }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Chrony

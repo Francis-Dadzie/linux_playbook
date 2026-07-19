@@ -1,0 +1,68 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/firewall
+
+# --- Debian/Ubuntu: ufw ---
+- name: Install ufw (Debian/Ubuntu)
+  ansible.builtin.package:
+    name: ufw
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Allow TCP ports (Debian/Ubuntu)
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ allowed_tcp_ports }}"
+  when: ansible_os_family == "Debian"
+
+- name: Allow UDP ports (Debian/Ubuntu)
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: udp
+  loop: "{{ allowed_udp_ports }}"
+  when:
+    - ansible_os_family == "Debian"
+    - allowed_udp_ports | length > 0
+
+- name: Enable ufw (Debian/Ubuntu)
+  community.general.ufw:
+    state: enabled
+    policy: deny
+  when: ansible_os_family == "Debian"
+
+# --- RedHat/Rocky: firewalld ---
+- name: Install firewalld (RedHat/Rocky)
+  ansible.builtin.package:
+    name: firewalld
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Enable and start firewalld (RedHat/Rocky)
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+  when: ansible_os_family == "RedHat"
+
+- name: Allow TCP ports (RedHat/Rocky)
+  ansible.posix.firewalld:
+    port: "{{ item }}/tcp"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ allowed_tcp_ports }}"
+  when: ansible_os_family == "RedHat"
+
+- name: Allow UDP ports (RedHat/Rocky)
+  ansible.posix.firewalld:
+    port: "{{ item }}/udp"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ allowed_udp_ports }}"
+  when:
+    - ansible_os_family == "RedHat"
+    - allowed_udp_ports | length > 0

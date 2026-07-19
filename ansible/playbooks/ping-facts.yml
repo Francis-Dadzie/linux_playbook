@@ -1,0 +1,29 @@
+---
+- name: Ping all nodes and gather system facts
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Ping each node
+      ansible.builtin.ping:
+
+    - name: Display OS information
+      ansible.builtin.debug:
+        msg: >
+          Host: {{ inventory_hostname }}
+          OS: {{ ansible_facts["distribution"] }} {{ ansible_facts["distribution_version"] }}
+          Kernel: {{ ansible_facts["kernel"] }}
+          Architecture: {{ ansible_facts["architecture"] }}
+
+    - name: Display memory information
+      ansible.builtin.debug:
+        msg: >
+          Host: {{ inventory_hostname }}
+          Total memory: {{ ansible_facts["memtotal_mb"] }} MB
+          Free memory: {{ ansible_facts["memfree_mb"] }} MB
+
+    - name: Display IP address
+      ansible.builtin.debug:
+        msg: >
+          Host: {{ inventory_hostname }}
+          IP: {{ ansible_facts["default_ipv4"]["address"] }}

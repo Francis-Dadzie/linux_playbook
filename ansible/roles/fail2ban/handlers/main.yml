@@ -1,0 +1,6 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Restart fail2ban
+  ansible.builtin.service:
+    name: "{{ fail2ban_service }}"
+    state: restarted

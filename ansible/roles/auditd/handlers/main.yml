@@ -1,0 +1,12 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Reload auditd
+  ansible.builtin.command:
+    cmd: service auditd reload
+  when: ansible_os_family == "RedHat"
+
+- name: Reload auditd (Debian/Ubuntu)
+  ansible.builtin.service:
+    name: auditd
+    state: restarted
+  when: ansible_os_family == "Debian"

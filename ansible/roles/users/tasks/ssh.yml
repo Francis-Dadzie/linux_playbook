@@ -1,0 +1,18 @@
+---
+- name: Install SSH key for admin users
+  ansible.posix.authorized_key:
+    user: "{{ item.username }}"
+    key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_ed25519.pub') }}"
+    state: present
+  loop: "{{ users }}"
+  when:
+    - not (item.service_account | default(false))
+    - item.shell != "/usr/sbin/nologin"
+
+- name: Install SSH key for ansible service account
+  ansible.posix.authorized_key:
+    user: "{{ item.username }}"
+    key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/ansible_svc.pub') }}"
+    state: present
+  loop: "{{ users }}"
+  when: item.service_account | default(false)

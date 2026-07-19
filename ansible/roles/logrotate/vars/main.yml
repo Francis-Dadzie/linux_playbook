@@ -1,0 +1,6 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles/logrotate
+logrotate_package: logrotate
+logrotate_conf: /etc/logrotate.conf
+logrotate_conf_dir: /etc/logrotate.d

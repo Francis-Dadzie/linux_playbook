@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles/grafana
+grafana_package: grafana
+grafana_service: grafana-server
+grafana_config: /etc/grafana/grafana.ini
+grafana_provisioning_dir: /etc/grafana/provisioning

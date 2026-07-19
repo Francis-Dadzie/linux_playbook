@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/auditd
+auditd_max_log_file: 50           # Max log file size in MB
+auditd_num_logs: 10               # Number of log files to keep
+auditd_max_log_file_action: rotate
+auditd_space_left_action: email
+auditd_admin_space_left_action: halt

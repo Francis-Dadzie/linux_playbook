@@ -1,0 +1,16 @@
+# Managed by Ansible
+{{ item.path }} {
+    {{ item.frequency | default('weekly') }}
+    rotate {{ item.rotate | default(4) }}
+{% if item.compress | default(true) %}
+    compress
+    delaycompress
+{% endif %}
+{% if item.missingok | default(true) %}
+    missingok
+{% endif %}
+{% if item.notifempty | default(true) %}
+    notifempty
+{% endif %}
+    sharedscripts
+}

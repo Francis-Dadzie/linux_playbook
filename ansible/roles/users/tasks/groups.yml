@@ -1,0 +1,12 @@
+---
+- name: Ensure sudo group exists (Debian/Ubuntu)
+  ansible.builtin.group:
+    name: sudo
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Ensure wheel group exists (RedHat/Rocky)
+  ansible.builtin.group:
+    name: wheel
+    state: present
+  when: ansible_os_family == "RedHat"

@@ -1,0 +1,46 @@
+---
+- name: Add sudo users (Debian/Ubuntu)
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    groups: sudo
+    append: true
+  loop: "{{ users }}"
+  when:
+    - ansible_os_family == "Debian"
+    - item.sudo | default(false)
+    - not (item.service_account | default(false))
+
+- name: Add sudo users (RedHat/Rocky)
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    groups: wheel
+    append: true
+  loop: "{{ users }}"
+  when:
+    - ansible_os_family == "RedHat"
+    - item.sudo | default(false)
+    - not (item.service_account | default(false))
+
+- name: Configure scoped sudo for ansible service account (Debian/Ubuntu)
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/ansible
+    line: "ansible ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-get, /usr/bin/systemctl, /usr/bin/tee, /usr/sbin/useradd, /usr/sbin/usermod, /usr/sbin/groupadd, /usr/bin/chage"
+    create: true
+    mode: "0440"
+    validate: /usr/sbin/visudo -cf %s
+  loop: "{{ users }}"
+  when:
+    - ansible_os_family == "Debian"
+    - item.service_account | default(false)
+
+- name: Configure scoped sudo for ansible service account (RedHat/Rocky)
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/ansible
+    line: "ansible ALL=(ALL) NOPASSWD: /usr/bin/dnf, /usr/bin/systemctl, /usr/bin/tee, /usr/sbin/useradd, /usr/sbin/usermod, /usr/sbin/groupadd, /usr/bin/chage"
+    create: true
+    mode: "0440"
+    validate: /usr/sbin/visudo -cf %s
+  loop: "{{ users }}"
+  when:
+    - ansible_os_family == "RedHat"
+    - item.service_account | default(false)

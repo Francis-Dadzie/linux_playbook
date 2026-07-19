@@ -1,0 +1,14 @@
+---
+- name: Configure Linux servers
+  hosts: linux
+  become: true
+
+  roles:
+    - common
+    - chrony
+    - users
+    - ssh_hardening
+    - firewall
+    - fail2ban
+    - auditd
+    - logrotate

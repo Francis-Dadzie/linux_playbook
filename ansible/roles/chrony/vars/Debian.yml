@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: MIT-0
+---
+chrony_package: chrony
+chrony_service: chrony
+chrony_config: /etc/chrony/chrony.conf

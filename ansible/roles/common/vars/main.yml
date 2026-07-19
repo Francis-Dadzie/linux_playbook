@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles/common
+essential_packages:
+  - vim
+  - git
+  - curl
+  - wget
+  - unzip
+  - zip
+  - htop
+  - tree
+  - jq
+  - rsync
+  - tcpdump
+  - net-tools
+  - traceroute
+  - bash-completion

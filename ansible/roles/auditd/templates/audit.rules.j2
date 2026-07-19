@@ -1,0 +1,30 @@
+# Managed by Ansible — audit rules
+
+# Remove all existing rules
+-D
+
+# Increase buffer size
+-b 8192
+
+# Record authentication events
+-w /etc/passwd -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/group -p wa -k identity
+-w /etc/sudoers -p wa -k sudoers
+-w /etc/sudoers.d/ -p wa -k sudoers
+
+# Record SSH configuration changes
+-w /etc/ssh/sshd_config -p wa -k sshd_config
+
+# Record sudo usage
+-a always,exit -F arch=b64 -S execve -F path=/usr/bin/sudo -k sudo_usage
+
+# Record privileged commands
+-a always,exit -F arch=b64 -S execve -F euid=0 -k privileged
+
+# Record login/logout events
+-w /var/log/lastlog -p wa -k logins
+-w /var/run/faillock/ -p wa -k logins
+
+# Make audit config immutable (requires reboot to change rules)
+-e 2

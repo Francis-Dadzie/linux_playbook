@@ -1,0 +1,16 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for users
+# Override this list in group_vars or host_vars
+users:
+  - username: finn
+    comment: "Finn - admin"
+    shell: /bin/bash
+    sudo: true
+    service_account: false
+
+  - username: ansible
+    comment: "Ansible service account"
+    shell: /bin/bash
+    sudo: false
+    service_account: true

@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles/node_exporter
+node_exporter_package: prometheus-node-exporter
+node_exporter_service: prometheus-node-exporter

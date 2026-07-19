@@ -1,0 +1,26 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/logrotate
+- name: Install logrotate
+  ansible.builtin.package:
+    name: "{{ logrotate_package }}"
+    state: present
+
+- name: Configure global logrotate defaults
+  ansible.builtin.lineinfile:
+    path: "{{ logrotate_conf }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    backup: true
+  loop:
+    - { regexp: '^(#\s*)?rotate\s', line: "rotate {{ logrotate_rotate }}" }
+    - { regexp: '^weekly|^daily|^monthly', line: "{{ logrotate_frequency }}" }
+
+- name: Deploy custom log rotation configs
+  ansible.builtin.template:
+    src: logrotate_custom.j2
+    dest: "{{ logrotate_conf_dir }}/{{ item.name }}"
+    owner: root
+    group: root
+    mode: "0644"
+  loop: "{{ logrotate_custom_configs }}"

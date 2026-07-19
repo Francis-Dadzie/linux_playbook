@@ -1,0 +1,20 @@
+---
+
+ansible_python_interpreter: /usr/bin/python3
+
+users:
+
+  - username: ansible
+    comment: Automation Account
+    shell: /bin/bash
+    sudo: true
+
+  - username: devops
+    comment: DevOps Engineer
+    shell: /bin/bash
+    sudo: true
+
+  - username: monitor
+    comment: Monitoring Service
+    shell: /usr/sbin/nologin
+    sudo: false

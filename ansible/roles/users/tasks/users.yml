@@ -1,0 +1,9 @@
+---
+- name: Create managed users
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    comment: "{{ item.comment }}"
+    shell: "{{ item.shell }}"
+    create_home: true
+    state: present
+  loop: "{{ users }}"

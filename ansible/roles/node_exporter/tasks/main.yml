@@ -1,0 +1,91 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/node_exporter
+- name: Install node_exporter (Debian/Ubuntu)
+  ansible.builtin.package:
+    name: "{{ node_exporter_package }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Enable and start node_exporter (Debian/Ubuntu)
+  ansible.builtin.service:
+    name: "{{ node_exporter_service }}"
+    state: started
+    enabled: true
+  when: ansible_os_family == "Debian"
+
+- name: Create node_exporter user (RedHat/Rocky)
+  ansible.builtin.user:
+    name: node_exporter
+    shell: /usr/sbin/nologin
+    create_home: false
+    system: true
+  when: ansible_os_family == "RedHat"
+
+- name: Download node_exporter binary (RedHat/Rocky)
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    dest: /tmp/node_exporter.tar.gz
+    mode: "0644"
+  when: ansible_os_family == "RedHat"
+
+- name: Extract node_exporter binary (RedHat/Rocky)
+  ansible.builtin.unarchive:
+    src: /tmp/node_exporter.tar.gz
+    dest: /tmp
+    remote_src: true
+  when: ansible_os_family == "RedHat"
+
+- name: Install node_exporter binary (RedHat/Rocky)
+  ansible.builtin.copy:
+    src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+    dest: /usr/local/bin/node_exporter
+    owner: node_exporter
+    group: node_exporter
+    mode: "0755"
+    remote_src: true
+  when: ansible_os_family == "RedHat"
+
+- name: Deploy node_exporter systemd service (RedHat/Rocky)
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Node Exporter
+      After=network.target
+
+      [Service]
+      User=node_exporter
+      ExecStart=/usr/local/bin/node_exporter
+      Restart=on-failure
+
+      [Install]
+      WantedBy=multi-user.target
+  when: ansible_os_family == "RedHat"
+  notify: Restart node_exporter
+
+- name: Enable and start node_exporter (RedHat/Rocky)
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+    enabled: true
+    daemon_reload: true
+  when: ansible_os_family == "RedHat"
+
+- name: Allow node_exporter port through ufw (Debian/Ubuntu)
+  community.general.ufw:
+    rule: allow
+    port: "{{ node_exporter_port }}"
+    proto: tcp
+  when: ansible_os_family == "Debian"
+
+- name: Allow node_exporter port through firewalld (RedHat/Rocky)
+  ansible.posix.firewalld:
+    port: "{{ node_exporter_port }}/tcp"
+    permanent: true
+    state: enabled
+    immediate: true
+  when: ansible_os_family == "RedHat"

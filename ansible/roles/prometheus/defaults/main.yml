@@ -1,0 +1,10 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/prometheus
+prometheus_port: 9091
+prometheus_scrape_interval: 15s
+prometheus_evaluation_interval: 15s
+prometheus_targets:
+  - 100.66.182.14:9100
+  - 100.95.3.56:9100
+  - 100.92.184.44:9100

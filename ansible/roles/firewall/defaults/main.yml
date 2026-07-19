@@ -1,0 +1,6 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/firewall
+allowed_tcp_ports:
+  - 22
+allowed_udp_ports: []

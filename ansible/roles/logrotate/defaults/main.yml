@@ -1,0 +1,20 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/logrotate
+logrotate_frequency: weekly
+logrotate_rotate: 4             # Keep 4 weeks of logs
+logrotate_compress: true
+logrotate_delaycompress: true
+logrotate_missingok: true
+logrotate_notifempty: true
+logrotate_create: true
+
+# Custom log rotation entries
+logrotate_custom_configs:
+  - name: ansible_managed_logs
+    path: /var/log/syslog
+    frequency: daily
+    rotate: 7
+    compress: true
+    missingok: true
+    notifempty: true

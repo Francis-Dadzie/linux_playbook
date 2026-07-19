@@ -1,0 +1,13 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Restart SSH (Debian/Ubuntu)
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
+  when: ansible_os_family == "Debian"
+
+- name: Restart SSH (RedHat/Rocky)
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+  when: ansible_os_family == "RedHat"

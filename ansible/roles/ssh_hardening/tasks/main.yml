@@ -1,0 +1,21 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/ssh_hardening
+- name: Harden SSH configuration
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    backup: true
+  loop:
+    - { regexp: '^#?Port', line: "Port {{ ssh_port }}" }
+    - { regexp: '^#?PermitRootLogin', line: "PermitRootLogin {{ ssh_permit_root_login }}" }
+    - { regexp: '^#?PasswordAuthentication', line: "PasswordAuthentication {{ ssh_password_authentication }}" }
+    - { regexp: '^#?MaxAuthTries', line: "MaxAuthTries {{ ssh_max_auth_tries }}" }
+    - { regexp: '^#?LoginGraceTime', line: "LoginGraceTime {{ ssh_login_grace_time }}" }
+    - { regexp: '^#?AllowAgentForwarding', line: "AllowAgentForwarding {{ ssh_allow_agent_forwarding }}" }
+    - { regexp: '^#?X11Forwarding', line: "X11Forwarding {{ ssh_x11_forwarding }}" }
+  notify:
+    - Restart SSH (Debian/Ubuntu)
+    - Restart SSH (RedHat/Rocky)
