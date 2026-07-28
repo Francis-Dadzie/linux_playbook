@@ -114,8 +114,8 @@ dc=example,dc=com                   ← Root (Base DN / Suffix)
 
 - **ibmslapd** — the core LDAP server daemon
 - **ibm-adminserver** — the admin server (handles web console and admin operations)
-- **DB2** — the backend database where all directory data is stored (IBM SDS uses DB2, unlike OpenLDAP which uses LMDB)
-- **GSKit** — IBM's SSL/TLS library, used for certificate management (not OpenSSL's native keystore format)
+- **DB2** — the backend database where all directory data is stored
+- **GSKit** — IBM's SSL/TLS library, used for certificate management
 
 ### Deployment Topology Options
 
@@ -154,7 +154,7 @@ dc=example,dc=com                   ← Root (Base DN / Suffix)
 /tmp/ibm-adminserver/            ← Admin server temp files
 ```
 
-> Exact paths vary by version (V6.3, V6.4, V6.5). Always confirm with `find /opt/IBM -name "ibmslapd" 2>/dev/null`.
+> Exact paths vary by version. Confirm with `find /opt/IBM -name "ibmslapd" 2>/dev/null`.
 
 ---
 
@@ -163,7 +163,7 @@ dc=example,dc=com                   ← Root (Base DN / Suffix)
 The main SDS configuration file. Location: `/etc/opt/IBM/ldap/V6.4/etc/ibmslapd.conf`
 Validate syntax before restarting: `ibmslapd -t -f /etc/opt/IBM/ldap/V6.4/etc/ibmslapd.conf`
 
-> Changes to `ibmslapd.conf` require a server restart to take effect — **except** for attributes that can be changed live via `ldapmodify` against `cn=ibmpolicies` (noted below).
+> Changes to `ibmslapd.conf` require a server restart to take effect — **except** for attributes that can be changed live via `ldapmodify` against `cn=ibmpolicies` (below).
 
 ### Core Server Stanza (`cn=Front End`)
 
