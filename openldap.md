@@ -1,31 +1,8 @@
-# OpenLDAP Administrator Reference
+# OpenLDAP
 
-A focused, practical reference for administering OpenLDAP (slapd) on Linux. Covers architecture, configuration, replication, TLS, access control, monitoring, and troubleshooting.
+Covers architecture, configuration, replication, TLS, access control, monitoring, and troubleshooting.
 
 > **Installation:** Follow the official guide at https://www.openldap.org/doc/admin26/quickstart.html
-> For distro-specific packages: RHEL/Rocky → `dnf install openldap openldap-servers openldap-clients` | Debian/Ubuntu → `apt install slapd ldap-utils`
-
----
-
-## Table of Contents
-
-- [1. Architecture & Components](#1-architecture--components)
-- [2. Directory Layout on Disk](#2-directory-layout-on-disk)
-- [3. Configuration — cn=config (OLC)](#3-configuration--cnconfig-olc)
-- [4. cn=config Key Directives](#4-cnconfig-key-directives)
-- [5. Core Admin Commands](#5-core-admin-commands)
-- [6. LDIF Operations](#6-ldif-operations)
-- [7. Schema Management](#7-schema-management)
-- [8. Access Control Lists (ACLs)](#8-access-control-lists-acls)
-- [9. Replication — syncrepl](#9-replication--syncrepl)
-- [10. TLS / SSL with OpenSSL](#10-tls--ssl-with-openssl)
-- [11. Password Policy (ppolicy overlay)](#11-password-policy-ppolicy-overlay)
-- [12. Monitoring via cn=Monitor](#12-monitoring-via-cnmonitor)
-- [13. Logging & Troubleshooting](#13-logging--troubleshooting)
-- [14. Performance Tuning](#14-performance-tuning)
-- [15. Backup & Recovery](#15-backup--recovery)
-- [16. Useful One-Liners](#16-useful-one-liners)
-
 ---
 
 ## 1. Architecture & Components
@@ -84,13 +61,13 @@ A focused, practical reference for administering OpenLDAP (slapd) on Linux. Cove
 /var/log/syslog or journald        ← slapd logs
 ```
 
-> **Never edit files in `slapd.d/` directly.** Always make config changes via `ldapmodify` against `cn=config`. Direct edits break checksums and corrupt the config.
+> ** Directly editing `slapd.d/` break checksums and corrupt the config.** Make config changes via `ldapmodify` against `cn=config`.
 
 ---
 
 ## 3. Configuration — cn=config (OLC)
 
-All configuration lives inside a special LDAP database (`cn=config`) and is modified using standard LDAP operations. Changes take effect immediately — no restart needed.
+All configuration lives inside `cn=config`, modified using standard LDAP operations. No restart needed after a change.
 
 ### Authenticating to cn=config
 
@@ -173,7 +150,7 @@ EOF
 
 ## 5. Core Admin Commands
 
-Run as root or the `ldap` user. **Stop slapd first** unless noted.
+Run as root or the `ldap` user. **Stop slapd first**
 
 | Command | Description | slapd state |
 |---------|-------------|-------------|
@@ -216,7 +193,7 @@ slappasswd -h {ARGON2} -s "MyPass"   # modern scheme
 
 ## 6. LDIF Operations
 
-Standard client commands (`ldapsearch`, `ldapadd`, `ldapmodify`, `ldapdelete`) use the same syntax and LDIF format as any LDAP implementation.
+Standard client commands (`ldapsearch`, `ldapadd`, `ldapmodify`, `ldapdelete`) same syntax and LDIF format as any LDAP implementation.
 
 ```bash
 # Bind via Unix socket (most powerful — no password)
