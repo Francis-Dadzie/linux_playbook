@@ -61,7 +61,7 @@ Covers architecture, configuration, replication, TLS, access control, monitoring
 /var/log/syslog or journald        ← slapd logs
 ```
 
-> ** Directly editing `slapd.d/` break checksums and corrupt the config.** Make config changes via `ldapmodify` against `cn=config`.
+> Directly editing `slapd.d/` corrupt config. Make changes via `ldapmodify` against `cn=config`.
 
 ---
 
@@ -80,7 +80,7 @@ ldapsearch -Y EXTERNAL -H ldapi:/// -b "cn=config"
 
 ```bash
 # Set hashed root password
-HASHED=$(slappasswd -s YourAdminPassword)
+HASHED=$(slappasswd -s AdminPassword)
 
 # Set suffix and root DN on the directory database
 ldapmodify -Y EXTERNAL -H ldapi:/// << EOF
