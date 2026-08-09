@@ -1,2 +1,2 @@
-This repo documents my learning on how systems work behind the scenes, and demonstrates a step towards 
+This repo documents my learning on various systems, how they work behind the scenes, and demonstrates a step towards 
 Infrastructure/Platform Engineering
