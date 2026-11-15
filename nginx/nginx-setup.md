@@ -7,7 +7,7 @@ Confirm the following:
 
 ```bash
 # Ports 80 and 443 are not already in use       # Have sudo/root access ?   # System is up to date ?
-ss -tlnp | grep -E ':80|:443'                     id                          RHEL: dnf update -y
+ss -tlnp | grep -E ':80|:443'                     id                          dnf update -y
 
 # Disk space (nginx logs can grow — /var should have headroom)               # Version
   df -h /var /etc                                                              nginx -v
