@@ -1,46 +1,12 @@
-# AIX Command Reference
-
-AIX is IBM's enterprise Unix operating system — POSIX-compliant and conceptually similar to Linux, but with its own tooling, filesystem layout, package manager, and conventions.
-
-If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` instead of editing config files directly, `ODM` (Object Data Manager) as the system config database, `LVM` works differently (AIX invented it), and `installp`/`nim` instead of `apt`/`dnf`.
-
-## Table of Contents
-
-- [System Identity & Overview](#system-identity--overview)  
-- [Hardware & Devices](#hardware--devices)  
-- [Users, Groups & Authentication](#users-groups--authentication)  
-- [Files & Directories](f#iles--directories)  
-- [Permissions & Ownership](#permissions--ownership)  
-- [Text Processing](#text-processing)  
-- [Processes & Job Control](#processes--job-control)  
-- [Performance & Diagnostics](#performance--diagnostics)  
-- [Storage, LVM & Filesystems](#storage-lvm--filesystems)  
-- [Networking](#networking)  
-- [Package Management (installp, nim, rpm)](#package-management-installp-nim-rpm)  
-- [Services & System Control](#services--system-control)  
-- [Scheduling & Automation](#scheduling--automation)  
-- [Logging & Auditing](#logging--auditing)  
-- [Security & Certificates](#security--certificates)  
-- [Backup & Recovery](#backup--recovery)  
-- [SMIT — AIX's Admin Interface](#smit--aixs-admin-interface)  
-- [AIX-Specific Utilities](#aix-specific-utilities)  
-- [DB2 — IBM SDS Backend](#db2--ibm-sds-backend)  
-- [Quick One-Liners for AIX](#quick-one-liners-for-aix)  
-
----
+# Reference
 
 ## System Identity & Overview
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
-| `uname -a` | OS name, version, hardware | `uname -a` | Same |
 | `oslevel` | Show exact AIX version/service pack | `oslevel -s` | `cat /etc/os-release` |
-| `hostname` | Show/set hostname | `hostname` | Same |
 | `prtconf` | Print system configuration (CPU, RAM, model) | `prtconf` | `lshw -short` |
 | `lsattr -El sys0` | Show system-level attributes (RAM, CPU) | `lsattr -El sys0` | `dmidecode` |
-| `uptime` | System uptime and load average | `uptime` | Same |
-| `who -b` | Last boot time | `who -b` | Same |
-| `date` | Display or set system date/time | `date` | Same |
 | `bootinfo -r` | Show real memory (RAM) in KB | `bootinfo -r` | `free -k` |
 | `bootinfo -y` | Show CPU architecture (32/64-bit) | `bootinfo -y` | `uname -m` |
 | `lparstat` | Show LPAR (partition) CPU/memory stats | `lparstat -i` | `lscpu` |
@@ -71,92 +37,25 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 | `rmuser` | Remove a user | `rmuser finn` | `userdel` |
 | `chuser` | Modify user attributes | `chuser shell=/usr/bin/bash finn` | `usermod` |
 | `lsuser` | List user attributes | `lsuser -a ALL finn` | `getent passwd finn` |
-| `passwd` | Change user password | `passwd finn` | Same |
 | `pwdadm` | Manage password admin (force change, etc.) | `pwdadm -f ADMCHG finn` | `chage` |
 | `chsec` | Change security stanza attributes | `chsec -f /etc/security/user -s finn -a maxage=12` | `chage` / `usermod` |
 | `mkgroup` | Create a new group | `mkgroup admins` | `groupadd` |
 | `rmgroup` | Remove a group | `rmgroup admins` | `groupdel` |
 | `chgroup` | Modify group attributes | `chgroup users=finn,bob admins` | `gpasswd` |
 | `lsgroup` | List group attributes | `lsgroup -a ALL admins` | `getent group` |
-| `id` | Show user and group IDs | `id finn` | Same |
-| `who` | Show currently logged in users | `who` | Same |
-| `w` | Who is logged in and what they're doing | `w` | Same |
-| `last` | Login history | `last -20` | Same |
-| `su` | Switch user | `su - finn` | Same |
-| `sudo` | Run as another user (if configured) | `sudo command` | Same |
 | `lsuser -f ALL` | List all users with all attributes | `lsuser -f ALL` | `cat /etc/passwd` |
 
-> AIX stores user attributes in `/etc/security/user`, `/etc/security/passwd`, and `/etc/security/limits` — not just `/etc/passwd` and `/etc/shadow` like Linux.
-
----
-
-## Files & Directories
-
-| Command | Description | Example | Linux Equivalent |
-|---------|-------------|---------|-----------------|
-| `ls` | List directory contents | `ls -lah` | Same |
-| `pwd` | Print working directory | `pwd` | Same |
-| `cd` | Change directory | `cd /var/log` | Same |
-| `mkdir` | Create directory | `mkdir -p /opt/ldap/backup` | Same |
-| `rm` | Remove files/directories | `rm -rf dir/` | Same |
-| `cp` | Copy files | `cp -r src/ dest/` | Same |
-| `mv` | Move/rename files | `mv old new` | Same |
-| `touch` | Create empty file / update timestamp | `touch file.txt` | Same |
-| `ln` | Create links | `ln -s target link` | Same |
-| `find` | Search for files | `find /var -mtime -1 -type f` | Same |
-| `stat` | Show file metadata | `stat file` | Same |
-| `file` | Determine file type | `file binary` | Same |
-| `which` / `whence` | Find a command's location | `whence lsuser` | `which` / `type` |
-
-> AIX uses JFS2 (Journaled File System 2) by default, not ext4/XFS. Key paths differ slightly — e.g., `/usr/bin` for most commands, `/usr/sbin` for admin tools.
-
+> user attributes in `/etc/security/user`, `/etc/security/passwd`, and `/etc/security/limits` — not just `/etc/passwd` and `/etc/shadow`
 ---
 
 ## Permissions & Ownership
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
-| `chmod` | Change file permissions | `chmod 750 script.sh` | Same |
-| `chown` | Change owner | `chown finn:admins file` | Same |
-| `chgrp` | Change group | `chgrp admins file` | Same |
-| `umask` | View/set default permission mask | `umask 022` | Same |
 | `acledit` | Edit ACLs on AIX files | `acledit file` | `setfacl` |
 | `aclget` | Display ACL on a file | `aclget file` | `getfacl` |
 | `aclput` | Apply ACL from a file | `aclput file < acl.txt` | `setfacl --restore` |
 
-## Text Processing
-
-| Command | Description | Example | Linux Equivalent |
-|---------|-------------|---------|-----------------|
-| `cat` / `tac` | Print file contents | `cat /etc/hosts` | Same |
-| `head` / `tail` | First/last lines of a file | `tail -f /var/log/messages` | Same |
-| `grep` / `egrep` | Search text | `grep -r "error" /var/log` | Same |
-| `sed` | Stream editor | `sed -i 's/old/new/g' file` | Same |
-| `awk` | Field processing | `awk -F: '{print $1}' /etc/passwd` | Same |
-| `cut` | Extract fields | `cut -d: -f1 /etc/passwd` | Same |
-| `sort` / `uniq` | Sort and deduplicate | `sort file \| uniq -c` | Same |
-| `wc` | Count lines/words/bytes | `wc -l file` | Same |
-| `diff` | Compare files | `diff file1 file2` | Same |
-| `pg` | AIX pager (similar to `more`) | `pg /etc/security/user` | `less` / `more` |
-| `tee` | Write to file and stdout | `command \| tee output.txt` | Same |
-| `xargs` | Build commands from stdin | `find . -name "*.log" \| xargs rm` | Same |
-| `vi` / `vim` | Text editor | `vi /etc/hosts` | Same |
-
-## Processes & Job Control
-
-| Command | Description | Example | Linux Equivalent |
-|---------|-------------|---------|-----------------|
-| `ps` | List running processes | `ps -ef` | `ps aux` |
-| `ps -ef \| grep <name>` | Find a specific process | `ps -ef \| grep slapd` | Same |
-| `kill` | Send signal to a process | `kill -9 PID` | Same |
-| `killall` | Kill by process name | `killall slapd` | Same |
-| `nice` / `renice` | Set/change process priority | `renice -n 5 -p PID` | Same |
-| `nohup` | Run immune to hangups | `nohup ./script.sh &` | Same |
-| `bg` / `fg` / `jobs` | Background/foreground job control | `bg %1` | Same |
-| `wait` | Wait for background jobs | `wait` | Same |
-| `lsof` | List open files by process | `lsof -i :389` | Same |
-| `procinfo` | Show process resource usage | `procinfo PID` | `/proc/PID/status` |
-| `svmon` | AIX virtual memory monitor per process | `svmon -P PID` | `pmap` |
 
 ## Performance & Diagnostics
 
@@ -164,10 +63,7 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 |---------|-------------|---------|-----------------|
 | `topas` | AIX's interactive performance monitor | `topas` | `htop` |
 | `nmon` | Full-screen performance tool (CPU/disk/net/mem) | `nmon` | `glances` |
-| `vmstat` | Virtual memory/CPU statistics | `vmstat 1 5` | Same |
-| `iostat` | I/O statistics per disk | `iostat -d 1 5` | Same |
 | `netstat` | Network stats and connections | `netstat -an` | `ss -an` |
-| `sar` | System activity reporter (historical) | `sar -u 1 5` | Same |
 | `filemon` | Monitor file/disk activity | `filemon -o out.txt` | `iotop` |
 | `netpmon` | Monitor network activity | `netpmon -o out.txt` | `nethogs` |
 | `tprof` | CPU profiler | `tprof -p program` | `perf` |
@@ -177,8 +73,6 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 | `bindprocessor` | Bind processes to specific CPUs | `bindprocessor -q` | `taskset` |
 
 ## Storage, LVM & Filesystems
-
-> AIX invented LVM (Logical Volume Manager). Its terminology differs from Linux LVM — **Volume Groups**, **Logical Volumes**, and **Physical Volumes** exist in AIX too, but the commands are different.
 
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
@@ -194,12 +88,10 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 | `rmvg` | Remove a volume group | `rmvg datavg` | `vgremove` |
 | `df` | Disk free (filesystem usage) | `df -g` (in GB) | `df -h` |
 | `du` | Directory disk usage | `du -sm /opt/*` | `du -sh` |
-| `mount` / `umount` | Mount/unmount filesystems | `mount /dev/ldaplv /opt/ldap` | Same |
 | `crfs` | Create a filesystem on a logical volume | `crfs -v jfs2 -d ldaplv -m /opt/ldap -A yes` | `mkfs` + `mount` |
 | `chfs` | Change filesystem attributes (resize) | `chfs -a size=+1G /opt/ldap` | `resize2fs` |
 | `rmfs` | Remove a filesystem | `rmfs /opt/ldap` | `umount` + manual |
 | `lsfs` | List filesystems | `lsfs` | `findmnt` |
-| `fsck` | Filesystem check | `fsck /dev/ldaplv` | Same |
 | `/etc/filesystems` | Persistent mount config (like `/etc/fstab`) | `cat /etc/filesystems` | `/etc/fstab` |
 
 ## Networking
@@ -210,8 +102,6 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 | `ifconfig en0 up/down` | Bring interface up/down | `ifconfig en0 down` | `ip link set eth0 down` |
 | `netstat -rn` | Show routing table | `netstat -rn` | `ip route` |
 | `route` | Manage routing table | `route add -net 10.0.0.0/24 10.0.0.1` | `ip route add` |
-| `ping` | Test reachability | `ping -c 4 host` | Same |
-| `traceroute` | Trace network path | `traceroute host` | Same |
 | `netstat -an` | All connections and listening ports | `netstat -an \| grep LISTEN` | `ss -tulnp` |
 | `host` / `nslookup` | DNS lookup | `host example.com` | `dig` |
 | `no` | AIX network options (kernel tuning) | `no -a` | `sysctl -a` (net.*) |
@@ -224,8 +114,6 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 
 ## Package Management (installp, nim, rpm)
 
-> AIX uses `installp` for native packages (`.bff` format) and `nim` for network installs. RPM is also supported for open-source software via the AIX Toolbox.
-
 | Command | Description | Example | Linux Equivalent |
 |---------|-------------|---------|-----------------|
 | `installp -aXgd` | Install a package from media | `installp -aXgd /dev/cd0 all` | `dnf install` |
@@ -237,8 +125,6 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 | `instfix -i` | List installed fixes/patches | `instfix -i \| grep ML` | `dnf history` |
 | `emgr -l` | List interim fixes (iFixes) | `emgr -l` | N/A |
 | `emgr -i` | Install an iFix | `emgr -i ifix.tar` | N/A |
-| `rpm -qa` | List RPM packages (Toolbox software) | `rpm -qa \| grep curl` | Same |
-| `rpm -ivh` | Install an RPM | `rpm -ivh package.rpm` | Same |
 | `nim -o install` | NIM network install | `nim -o cust -a lpp_source=lpp_res -a filesets=bos.net target` | `dnf install` (remote) |
 
 ## Services & System Control
@@ -255,24 +141,12 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 | `mkssys` | Register a new subsystem with SRC | `mkssys -s myapp -p /opt/myapp/bin/app -u 0` | `systemctl enable` |
 | `rmssys` | Remove a subsystem from SRC | `rmssys -s myapp` | `systemctl disable` |
 | `chssys` | Modify a subsystem definition | `chssys -s myapp -a "-flag"` | `systemctl edit` |
-| `shutdown -h now` | Halt the system | `shutdown -h now` | Same |
 | `shutdown -r now` | Reboot the system | `shutdown -r now` | `reboot` |
 | `init` | Change runlevel | `init 6` (reboot) / `init 0` (halt) | `systemctl isolate` |
 | `who -r` | Show current runlevel | `who -r` | `systemctl get-default` |
 | `/etc/inittab` | Startup config (AIX's init system) | `cat /etc/inittab` | `/etc/systemd/system/` |
 | `mkitab` | Add entry to `/etc/inittab` | `mkitab "myapp:2:respawn:/opt/myapp/start"` | `systemctl enable` |
 | `chitab` | Modify an `/etc/inittab` entry | `chitab "myapp:2:off:/opt/myapp/start"` | `systemctl disable` |
-
-## Scheduling & Automation
-
-| Command | Description | Example | Linux Equivalent |
-|---------|-------------|---------|-----------------|
-| `crontab -e` | Edit cron jobs | `crontab -e` | Same |
-| `crontab -l` | List cron jobs | `crontab -l` | Same |
-| `/var/spool/cron/crontabs/` | Cron storage location | `ls /var/spool/cron/crontabs/` | `/var/spool/cron/` |
-| `at` | Schedule one-time job | `at now + 1 hour` | Same |
-| `atq` / `atrm` | List/remove `at` jobs | `atq` | Same |
-| `batch` | Run when system load allows | `batch` | Same |
 
 ## Logging & Auditing
 
@@ -284,7 +158,6 @@ If you're coming from Linux, the biggest mental shifts are: `smit`/`smitty` inst
 | `alog -o -t boot` | View boot log | `alog -o -t boot` | `journalctl -b` |
 | `alog -o -t console` | View console log | `alog -o -t console` | `dmesg` |
 | `alog -t syslog` | View syslog via alog | `alog -o -t syslog` | `journalctl` |
-| `/var/log/syslog` | Syslog location | `tail -f /var/log/messages` | Same path (Linux) |
 | `syslogd` | Syslog daemon | `lssrc -s syslogd` | `journald` |
 | `audit start` | Start AIX auditing | `audit start` | `auditctl` |
 | `audit query` | Show current audit status | `audit query` | `auditctl -s` |
