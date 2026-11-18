@@ -1,7 +1,5 @@
 # Linux Sysadmin Command Reference
 
-A practical workflow/command reference for Linux System Administrators on what you actually use starting with "what is this box and what's on it," moving through day-to-day administration, and ending with modern tooling and quick one-liner recipes.
-
 Useful for daily ops work, troubleshooting, and certification prep (RHCSA/LFCS).
 
 ## Table of Contents
@@ -430,24 +428,6 @@ The first commands to run on any unfamiliar box.
 
 ---
 
-## Containers & Virtualization
-
-| Command | Description | Example |
-|---------|-------------|---------|
-| `docker` | Manage containers/images | `docker ps -a` |
-| `docker-compose` | Multi-container app definitions | `docker compose up -d` |
-| `podman` | Daemonless container engine | `podman ps -a` |
-| `buildah` | Build OCI images | `buildah bud -t name .` |
-| `skopeo` | Inspect/copy container images between registries | `skopeo inspect docker://image` |
-| `crictl` | CRI-compatible container debugging (k8s nodes) | `crictl ps` |
-| `virsh` | Manage libvirt VMs | `virsh list --all` |
-| `virt-install` | Create a new VM | `virt-install --name vm1 ...` |
-| `virt-clone` | Clone an existing VM | `virt-clone --original vm1 --name vm2 ...` |
-| `qemu-img` | Create/convert disk images | `qemu-img create -f qcow2 disk.qcow2 20G` |
-| `VBoxManage` | VirtualBox CLI management | `VBoxManage list vms` |
-
----
-
 ## Modern CLI Alternatives
 
 Newer tools that have become common on modern servers and dev workstations — useful to know even if the classics remain the lowest-common-denominator default.
@@ -466,24 +446,6 @@ Newer tools that have become common on modern servers and dev workstations — u
 | `httpie` | `curl` | Human-friendly HTTP client | `http GET example.com` |
 | `yq` | — | YAML processor (like `jq` for YAML) | `yq '.spec.replicas' deploy.yaml` |
 | `delta` | `diff` | Syntax-highlighted diffs | `git diff \| delta` |
-
----
-
-## Cloud & Automation Tooling
-
-| Command | Description | Example |
-|---------|-------------|---------|
-| `aws` | AWS CLI | `aws ec2 describe-instances` |
-| `az` | Azure CLI | `az vm list -o table` |
-| `gcloud` | Google Cloud CLI | `gcloud compute instances list` |
-| `terraform` | Infrastructure as Code | `terraform plan` |
-| `ansible` | Ad-hoc remote execution | `ansible all -m ping` |
-| `ansible-playbook` | Run automation playbooks | `ansible-playbook site.yml` |
-| `kubectl` | Kubernetes cluster management | `kubectl get pods -A` |
-| `helm` | Kubernetes package manager | `helm install release chart/` |
-| `packer` | Build machine images | `packer build template.json` |
-| `vault` | Secrets management (HashiCorp Vault) | `vault kv get secret/app` |
-| `cloud-init` | First-boot instance configuration | `cloud-init status` |
 
 ---
 
