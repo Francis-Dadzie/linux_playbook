@@ -258,38 +258,9 @@
 
 **Diagnostic log location:** `/home/ldapdb2/sqllib/db2dump/db2diag.log`
 
-**Buffer pool hit ratio check** (should be >95% — low ratio means DB2 is reading from disk, not memory):
 ```bash
 db2 get snapshot for database on LDAPDB | grep -i "buffer pool"
 ```
-
----
-
-## Quick One-Liners for AIX
-
-| Goal | Command |
-|------|---------|
-| Show OS level with maintenance pack | `oslevel -s` |
-| List all running subsystems (services) | `lssrc -a \| grep active` |
-| Find which fileset owns a binary | `lslpp -w /usr/bin/slapd` |
-| Check a specific hardware error in detail | `errpt -a \| head -100` |
-| List all users and their shells | `lsuser -a shell ALL` |
-| Show disk usage per filesystem in GB | `df -g` |
-| Check network interface stats | `entstat -d en0 \| grep -i error` |
-| List all volume groups and free space | `lsvg \| xargs lsvg` |
-| Show LPAR CPU entitlement | `lparstat -i \| grep -i entitled` |
-| Check if a port is listening | `netstat -an \| grep LISTEN \| grep 389` |
-| View boot log | `alog -o -t boot \| tail -50` |
-| Check installed maintenance level | `instfix -i \| grep "ML\|SP"` |
-| Collect full diagnostic bundle for IBM support | `snap -ac && ls /tmp/ibmsupt/` |
-| Show all users currently logged in | `who` |
-| Find large files over 100MB | `find / -xdev -size +100000k -exec ls -lh {} \;` |
-| View real-time performance overview | `nmon` |
-| Tail system messages | `tail -f /var/log/messages` |
-| Show all open files for a process | `lsof -p PID` |
-| Force password change at next login | `pwdadm -f ADMCHG username` |
-
----
 
 ## See Also
 
