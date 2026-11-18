@@ -167,6 +167,6 @@
 
 ## See Also
 
-- [commands.md](./commands.md) — full command syntax reference, organized by category
+- [commands.md](./commands.md) — full command syntax reference
 
 
