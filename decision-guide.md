@@ -1,26 +1,3 @@
-# If You're Trying To...
-
-A scenario-first companion to [commands.md](./commands.md). Starts from the **problem** and points you to the right tool.
-
-Use `Ctrl+F` / browser search for keywords like "slow," "disk," "port," "memory," etc.
-
-## Table of Contents
-
-- [Performance & "Something Feels Slow"](#performance--something-feels-slow)
-- [Disk Space & Storage](#disk-space--storage)
-- [Network & Connectivity](#network--connectivity)
-- [Processes & Resource Hogs](#processes--resource-hogs)
-- [Logs & Historical Investigation](#logs--historical-investigation)
-- [Users, Access & Permissions](#users-access--permissions)
-- [Security & Suspicious Activity](#security--suspicious-activity)
-- [Configuration & Change Management](#configuration--change-management)
-- [Backups & Data Safety](#backups--data-safety)
-- [Containers & Services](#containers--services)
-- [Automation & Repetition](#automation--repetition)
-- [Working Faster in the Terminal](#working-faster-in-the-terminal)
-
----
-
 ## Performance & "Something Feels Slow"
 
 | If you're trying to... | Use | Because |
