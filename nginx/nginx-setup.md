@@ -1,9 +1,7 @@
-# nginx Setup Guide (RHEL)
+# nginx - RHEL
 ---
 
-## Prerequisites
-
-Confirm the following:
+Confirm:
 
 ```bash
 # Ports 80 and 443 are not already in use       # Have sudo/root access ?   # System is up to date ?
@@ -13,9 +11,9 @@ ss -tlnp | grep -E ':80|:443'                     id                          dn
   df -h /var /etc                                                              nginx -v
 ```
 ---
-Follow installation guide on the [NGINX website](https://nginx.org/en/docs/install.html)
+Installation guide: [NGINX website](https://nginx.org/en/docs/install.html)
 
-## First Start & Smoke Test
+## Smoke Test
 
 ```bash
 
@@ -54,55 +52,14 @@ Follow installation guide on the [NGINX website](https://nginx.org/en/docs/insta
 /etc/logrotate.d/nginx             ← Log rotation config
 /run/nginx.pid                     ← PID file (running instance)
 ```
-
-> RHEL puts server blocks in `conf.d/`. Debian uses `sites-available/` + `sites-enabled/` with symlinks.
-
 ---
 
-## Default Server Block
-
-After install, review and replace the default config. On RHEL: `/etc/nginx/conf.d/default.conf`. On Debian: `/etc/nginx/sites-available/default`.
-
-A clean, minimal starting point:
-
-```nginx
-server {
-    listen       80;
-    listen       [::]:80;
-    server_name  _;     # catches all hostnames — replace with your domain
-
-    root   /usr/share/nginx/html;
-    index  index.html index.htm;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    # Deny access to hidden files
-    location ~ /\. {
-        deny all;
-    }
-
-    error_page 404              /404.html;
-    error_page 500 502 503 504  /50x.html;
-}
-```
-
-Place your content in ` /usr/share/nginx/html` or `/var/www/html/` and reload:
+## Firewall
 
 ```bash
-systemctl reload nginx
-```
-
----
-
-## Firewall Configuration
-
-```bash
-firewalld:                                               ufw:
-
-# Allow HTTP and HTTPS permanently                       ufw allow 'Nginx Full'     # opens both 80 and 443
-firewall-cmd --permanent --add-service=http              ufw reload
+firewalld:                                              
+# Allow HTTP and HTTPS permanently                     
+firewall-cmd --permanent --add-service=http             
 firewall-cmd --permanent --add-service=https
 firewall-cmd --reload
 
@@ -111,48 +68,7 @@ firewall-cmd --list-all
 ```
 ---
 
-## SELinux / AppArmor Considerations
-
-### SELinux (RHEL/CentOS/Rocky)
-
-By default, SELinux restricts what nginx can do. Common fixes:
-
-```bash
-# Check current SELinux mode
-getenforce
-
-# Allow nginx to make network connections (needed for reverse proxy)
-setsebool -P httpd_can_network_connect 1
-
-# Allow nginx to connect to upstream on non-standard ports
-semanage port -a -t http_port_t -p tcp 8080
-
-# Allow nginx to serve files from a non-default web root
-semanage fcontext -a -t httpd_sys_content_t "/opt/myapp/public(/.*)?"
-restorecon -Rv /opt/myapp/public
-
-# If nginx is being denied and you're not sure why
-ausearch -m avc -ts recent | grep nginx
-audit2allow -a   # shows what policy would allow it
-```
-
-### AppArmor (Debian/Ubuntu)
-
-```bash
-# Check nginx profile status
-aa-status | grep nginx
-
-# If nginx is in enforce mode and blocking operations, switch to complain mode
-aa-complain /etc/apparmor.d/usr.sbin.nginx
-
-# Or add a local override for a specific path
-echo "/opt/myapp/public/** r," >> /etc/apparmor.d/local/usr.sbin.nginx
-systemctl reload apparmor
-```
-
----
-
-## TLS Setup
+## TLS
 
 ### Certbot 
 
@@ -169,7 +85,7 @@ certbot renew --dry-run
 systemctl status certbot.timer
 ```
 
-### Manual / Internal CA Certificate
+### Local CA Certificate
 
 ```bash
 # Create directory for certs
@@ -188,9 +104,7 @@ chown root:root /etc/nginx/ssl/*
 cat example.com.crt ca-bundle.crt > example.com.chained.crt
 ```
 
-Then reference in your server block — see `configs/ssl-termination.conf`.
-
-### Verify TLS is working
+### Verify TLS
 
 ```bash
 # Check certificate presented by the server
@@ -207,75 +121,6 @@ curl -v --tlsv1.3 https://example.com
 
 ---
 
-## Post-Install Hardening
-
-Before going to production...........
-
-### In `nginx.conf` — http block
-
-```nginx
-http {
-    # Hide nginx version number from error pages and headers
-    server_tokens off;
-
-    # Limit request body size (prevent large upload abuse)
-    client_max_body_size 10m;
-
-    # Timeouts — prevent slow-client attacks
-    client_body_timeout   12;
-    client_header_timeout 12;
-    keepalive_timeout     15;
-    send_timeout          10;
-
-    # Disable unused HTTP methods at server level
-    # (allow only GET, HEAD, POST in location blocks as needed)
-}
-```
-
-### Disable unused modules
-
-If compiling from source, exclude modules you don't need:
-
-```bash
-./configure --without-http_autoindex_module \
-            --without-http_ssi_module \
-            --without-http_scgi_module
-```
-
-If using a package, check what's compiled in and disable via config:
-
-```nginx
-# Disable directory listing
-autoindex off;
-```
-
-### Run nginx as a non-root user
-
-The main nginx process must start as root (to bind port 80/443) but worker processes should run as a limited user:
-
-```nginx
-# In nginx.conf — top level
-user nginx;    # or www-data on Debian
-```
-
-Confirm:
-
-```bash
-ps aux | grep nginx
-# Master process: root
-# Worker processes: nginx (or www-data)
-```
-
-### Set worker process limits
-
-```nginx
-# In nginx.conf — top level
-worker_processes auto;          # one per CPU core
-
-events {http://192.168.0.117/
-    worker_connections 1024;    # max connections per worker
-}
-```
 
 ### Restrict access to sensitive paths
 
@@ -288,7 +133,7 @@ location ~ /\.(git|env|htaccess|htpasswd) {
 ```
 
 ---
-Run this checklist after setup and after any significant change:
+Troubleshooting:
 
 ```bash
 # 1. Config syntax is valid
