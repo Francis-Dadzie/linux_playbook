@@ -1,8 +1,8 @@
 # OpenLDAP
 
-Covers architecture, configuration, replication, TLS, access control, monitoring, and troubleshooting.
+Architecture, configuration, replication, TLS, access control, monitoring, and troubleshooting.
 
-> **Installation:** Follow the official guide at https://www.openldap.org/doc/admin26/quickstart.html
+> **Installation:** https://www.openldap.org/doc/admin26/quickstart.html
 ---
 
 ## 1. Architecture & Components
@@ -765,4 +765,4 @@ systemctl start slapd
 
 ---
 
-*See also: [ibm-ldap-sds-reference.md](./ibm-ldap-sds-reference.md) | [ldap-checklists.md](./ldap-checklists.md)*
+*See also: [ldap-checklists.md](./ldap-checklists.md)*
